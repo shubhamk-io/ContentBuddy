@@ -3,8 +3,44 @@ import { ArrowRight, BadgeCheck, Sparkles } from "lucide-react";
 import Logo from "./Logo";
 import ProductPreview from "./ProductPreview";
 import WaitlistForm from "./WaitlistForm";
+import { useEffect, useState } from "react";
+import api from "../services/api";
 
 export default function Hero() {
+
+const [users, setUsers] = useState([]);
+const [count, setCount] = useState(0);
+
+
+useEffect(() => {
+  const loadUsers = async () => {
+    try {
+      const { data } = await api.get("/api/waitlist/users");
+
+      setUsers(data.users || []);
+      setCount(data.count || 0);
+    } catch (error) {
+      console.error("Failed to load waitlist users:", error);
+    }
+  };
+
+  loadUsers();
+}, []);
+
+
+const getAvatarColor = (name = "") => {
+  const colors = [
+    "from-blue-500 to-cyan-500",
+    "from-purple-500 to-pink-500",
+    "from-indigo-500 to-blue-500",
+    "from-emerald-500 to-teal-500",
+    "from-orange-500 to-red-500",
+    "from-violet-500 to-purple-500"
+  ];
+
+  return colors[name.length % colors.length];
+};
+
   return (
     <section id="top" className="relative isolate overflow-hidden bg-white">
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_52%,#eef6ff_100%)]" />
@@ -60,6 +96,68 @@ export default function Hero() {
               Built for creators, founders, and content teams
             </div>
           </div>
+
+{/*  */}
+
+<motion.div
+  className="mt-8 flex justify-center lg:justify-start"
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.35 }}
+>
+  <div className="group relative overflow-hidden rounded-3xl border border-blue-100/70 bg-white/80 px-6 py-5 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl">
+
+    {/* Glow */}
+    <div className="absolute -top-10 right-0 h-24 w-24 rounded-full bg-blue-200/30 blur-3xl" />
+
+    <div className="relative flex items-center gap-5">
+
+      {/* Avatars */}
+     <div className="flex -space-x-4">
+  {users.slice(0, 5).map((user) => (
+    <div
+      key={user._id}
+      title={user.name}
+      className={`flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br ${getAvatarColor(
+        user.name
+      )} text-lg font-black text-white shadow-lg transition-all duration-300 hover:scale-110`}
+    >
+      {user.name?.charAt(0)?.toUpperCase()}
+    </div>
+  ))}
+
+  {count > 5 && (
+    <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-slate-900 text-sm font-black text-white shadow-lg">
+      +{count - 5}
+    </div>
+  )}
+</div>
+
+      {/* Content */}
+      <div>
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <div className="h-3 w-3 rounded-full bg-emerald-500" />
+            <div className="absolute inset-0 animate-ping rounded-full bg-emerald-400" />
+          </div>
+
+          <span className="text-sm font-bold text-emerald-600">
+            Live Waitlist
+          </span>
+        </div>
+
+        <p className="mt-1 text-lg font-black text-slate-950">
+          {count}+ creators joined
+        </p>
+
+        <p className="text-sm text-slate-500">
+          Founders, creators & marketers are joining daily
+        </p>
+      </div>
+    </div>
+  </div>
+</motion.div>
+
         </motion.div>
 
         <motion.div
