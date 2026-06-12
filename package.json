@@ -1,0 +1,13 @@
+{
+  "name": "content-buddy-waitlist",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Content Buddy SaaS waitlist landing page with React, Express, and MongoDB.",
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "dev": "node scripts/dev.js",
+    "build": "npm run build --prefix client",
+    "start": "npm start --prefix server"
+  }
+}

@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+::selection {
+  background: rgba(96, 165, 250, 0.35);
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-slate-200/80 bg-white/90 shadow-crisp backdrop-blur-2xl;
+  }
+
+  .blue-gradient-text {
+    @apply bg-gradient-to-r from-brand-600 via-accent-violet to-accent-teal bg-clip-text text-transparent;
+  }
+
+  .blue-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 font-extrabold text-white shadow-[0_16px_40px_rgba(15,23,42,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-[0_22px_70px_rgba(37,99,235,0.28)] focus:outline-none focus:ring-2 focus:ring-brand-300 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0;
+  }
+}
