@@ -114,7 +114,7 @@ const getAvatarColor = (name = "") => {
 
       {/* Avatars */}
      <div className="flex -space-x-4">
-  {users.slice(0, 5).map((user) => (
+  {users.slice(0, 3).map((user) => (
     <div
       key={user._id}
       title={user.name}
@@ -126,9 +126,9 @@ const getAvatarColor = (name = "") => {
     </div>
   ))}
 
-  {count > 5 && (
+  {count > 3 && (
     <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-slate-900 text-sm font-black text-white shadow-lg">
-      +{count - 5}
+      +{count - 3}
     </div>
   )}
 </div>
